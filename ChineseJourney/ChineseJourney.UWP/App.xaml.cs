@@ -14,6 +14,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ChineseJourney.Common.Helpers;
+using FFImageLoading;
+using FFImageLoading.Svg.Forms;
+using SamplyGame.Shared;
+using ZibaobaoLib.Helpers;
 
 namespace ChineseJourney.UWP
 {
@@ -28,8 +33,16 @@ namespace ChineseJourney.UWP
         /// </summary>
         public App()
         {
+            UnhandledException += (s, e) =>
+            {
+                if (X1LogHelper.HandlerGlobalException(e.Exception, s))
+                {
+                    e.Handled = true;
+                }
+            };
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            Windows.System.MemoryManager.AppMemoryUsageLimitChanging += MemoryManager_AppMemoryUsageLimitChanging;
         }
 
         /// <summary>
@@ -39,7 +52,6 @@ namespace ChineseJourney.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -51,6 +63,13 @@ namespace ChineseJourney.UWP
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
+
+                PlatformContext.Init("UWP");
+
+                FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+                var ignore = typeof(SvgCachedImage);
+
+                Rg.Plugins.Popup.Popup.Init();
 
                 Xamarin.Forms.Forms.Init(e);
 
@@ -96,6 +115,15 @@ namespace ChineseJourney.UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private void MemoryManager_AppMemoryUsageLimitChanging(object sender, Windows.System.AppMemoryUsageLimitChangingEventArgs e)
+        {
+            if (Windows.System.MemoryManager.AppMemoryUsage > e.NewLimit)
+            {
+                ImageService.Instance.InvalidateMemoryCache();
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+            }
         }
     }
 }

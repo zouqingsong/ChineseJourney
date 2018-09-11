@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using ChineseJourney.Common;
+using FFImageLoading;
+using FFImageLoading.Svg.Forms;
 using Foundation;
+using Plugin.DownloadManager;
+using SamplyGame.Shared;
 using UIKit;
 
 namespace ChineseJourney.iOS
@@ -22,10 +26,27 @@ namespace ChineseJourney.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            PlatformContext.Init("iOS");
+
+            Rg.Plugins.Popup.Popup.Init();
+
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            var ignore = typeof(SvgCachedImage);
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override void HandleEventsForBackgroundUrl(UIApplication application, string sessionIdentifier, Action completionHandler)
+        {
+            CrossDownloadManager.BackgroundSessionCompletionHandler = completionHandler;
+        }
+
+        public override void ReceiveMemoryWarning(UIApplication application)
+        {
+            ImageService.Instance.InvalidateMemoryCache();
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
         }
     }
 }

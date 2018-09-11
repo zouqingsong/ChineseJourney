@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:Urho.Forms;assembly=Urho.Forms"
+             xmlns:forms1="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+             xmlns:view="clr-namespace:ChineseJourney.Common.View;assembly=ChineseJourney"
+             xmlns:forms2="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:helpers="clr-namespace:ChineseJourney.Common.Helpers;assembly=ChineseJourney"
+             x:Class="ChineseJourney.Common.QuestionPage">
+
+     <RelativeLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10">
+     <StackLayout Orientation="Vertical" Margin="10,10,10,0"
+                  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4}" 
+                  RelativeLayout.YConstraint="0"
+                  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.6, Constant=-20}"
+                  RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-20}"
+                  >
+            <Picker HorizontalOptions="StartAndExpand" ItemsSource="{Binding BookList}" WidthRequest="200"
+                ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding ActiveBook}"/>
+
+        <forms1:CarouselView x:Name="QuestionView" BackgroundColor="Transparent"
+                             ItemsSource="{Binding QuestionList}" 
+                             Position="{Binding CurrentQuestionIndex, Mode=TwoWay}">
+            <forms1:CarouselView.ItemTemplate>
+                <DataTemplate>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal" Padding="0,10,50,10">
+                                <Label Text="{Binding Question}" FontAttributes="Bold" WidthRequest="700" LineBreakMode="WordWrap" VerticalOptions="FillAndExpand"/>
+                                <Image Source="{helpers:ImageResource speech}" 
+                                       WidthRequest="48" HeightRequest="48"
+                                       VerticalOptions="End">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TextToSpeakCommand}" CommandParameter="{Binding Question}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                            <ListView ItemsSource="{Binding Answers}">
+                                <ListView.ItemTemplate>
+                                <DataTemplate>
+                                  <ViewCell>
+                                        <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="60">
+                                            <view:SwitchControl IsToggled="{Binding Answer1Selected}" VerticalOptions="Center"/>
+                                            <Label Text="{Binding Value}" VerticalOptions="Center"/>
+                                            <Image Source="{helpers:ImageResource speech}" 
+                                                   WidthRequest="48" HeightRequest="48"
+                                                   VerticalOptions="End">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding TextToSpeakCommand}" CommandParameter="{Binding Value}"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                            </StackLayout>
+                                   </ViewCell>
+                                </DataTemplate>
+                              </ListView.ItemTemplate>
+                            </ListView>
+                    </StackLayout>
+                </DataTemplate>
+            </forms1:CarouselView.ItemTemplate>
+        </forms1:CarouselView>
+        <view:CarouselIndicators IndicatorHeight="16" IndicatorWidth="16" 
+                                 HeightRequest="20"
+                                 UnselectedIndicator="unselected_circle.png" 
+                                 SelectedIndicator="selected_circle.png" 
+                                 Position="{Binding CurrentQuestionIndex}" ItemsSource="{Binding QuestionList}" />
+         <Label FontSize="Large" TextColor="DeepSkyBlue" Text="Let's start" HeightRequest="60" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="End"
+                VerticalOptions="Center" MinimumHeightRequest="60" Margin="0,0,0,10"/>
+        </StackLayout>
+        <forms:UrhoSurface x:Name="UrhoSurface"
+                           Margin="10,10,10,10"
+                           RelativeLayout.XConstraint="0" 
+                           RelativeLayout.YConstraint="0"
+                           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4, Constant=-20}"
+                           RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-20}"
+                           />
+    </RelativeLayout>
+
+</ContentPage>
+
+
+

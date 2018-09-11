@@ -1,9 +1,8 @@
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
-namespace ChineseJourney
+namespace ChineseJourney.Common
 {
 	public partial class App : Application
 	{
@@ -11,7 +10,8 @@ namespace ChineseJourney
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
+			//MainPage = new QuestionPage();
+            MainPage = new HanziPage();
 		}
 
 		protected override void OnStart ()

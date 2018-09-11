@@ -2,9 +2,97 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>ChineseJourney.Common</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+	<DebugType>Full</DebugType>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.561731" />
+    <Compile Remove="UrhoPackage\Assets\**" />
+    <EmbeddedResource Remove="UrhoPackage\Assets\**" />
+    <None Remove="UrhoPackage\Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\all.txt" />
+    <None Remove="Resources\dictionary.txt" />
+    <None Remove="Resources\graphics.txt" />
+    <None Remove="Resources\selected_circle.png" />
+    <None Remove="Resources\speech.png" />
+    <None Remove="Resources\svgs\11904.svg" />
+    <None Remove="Resources\svgs\19518.svg" />
+    <None Remove="Resources\svgs\hanzi.svg" />
+    <None Remove="Resources\unselected_circle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\all.txt" />
+    <EmbeddedResource Include="Resources\dictionary.txt" />
+    <EmbeddedResource Include="Resources\selected_circle.png" />
+    <EmbeddedResource Include="Resources\speech.png" />
+    <EmbeddedResource Include="Resources\hanzi.svg" />
+    <EmbeddedResource Include="Resources\svgs\11904.svg" />
+    <EmbeddedResource Include="Resources\svgs\19518.svg" />
+    <EmbeddedResource Include="Resources\unselected_circle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.CognitoIdentity" Version="3.3.2.32" />
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.3.11.1" />
+    <PackageReference Include="AWSSDK.CognitoSync" Version="3.3.1.41" />
+    <PackageReference Include="AWSSDK.Core" Version="3.3.25.1" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.13.1" />
+    <PackageReference Include="AWSSDK.MobileAnalytics" Version="3.3.1.38" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.21.1" />
+    <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.3.1.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.4.168" />
+    <PackageReference Include="Serilog" Version="2.7.2-dev-01024" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.2-dev-00777" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.0.1-dev-00796" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.1-dev-00771" />
+    <PackageReference Include="Serilog.Sinks.Trace" Version="3.0.0-dev-00732" />
+    <PackageReference Include="SharpZipLib" Version="1.0.0" />
+    <PackageReference Include="SkiaSharp" Version="1.60.3" />
+    <PackageReference Include="SkiaSharp.Extended" Version="1.60.0" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.60.3" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.60.3" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.5.166-beta" />
+    <PackageReference Include="TranslatorService" Version="1.1.2" />
+    <PackageReference Include="UrhoSharp.Forms" Version="1.8.93" />
+    <PackageReference Include="Xam.Plugins.DownloadManager" Version="1.4.0" />
+    <PackageReference Include="Xam.Plugins.TextToSpeech" Version="4.0.0.7" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.3.840" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.3.840" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.3.840" />
+    <PackageReference Include="Xamarin.Forms" Version="3.2.0.729530-pre2" />
+    <PackageReference Include="Xamarin.Forms.CarouselView" Version="2.3.0-pre2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ZibaobaoLib\ZibaobaoLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="QuestionPage.xaml.cs">
+      <DependentUpon>QuestionPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="HanziPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

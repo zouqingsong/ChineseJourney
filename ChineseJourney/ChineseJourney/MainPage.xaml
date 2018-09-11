@@ -1,14 +1,167 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ChineseJourney"
-             x:Class="ChineseJourney.MainPage">
+             xmlns:forms="clr-namespace:Urho.Forms;assembly=Urho.Forms"
+             xmlns:forms1="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+             xmlns:view="clr-namespace:ChineseJourney.Common.View;assembly=ChineseJourney"
+             xmlns:forms2="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:helpers="clr-namespace:ChineseJourney.Common.Helpers;assembly=ChineseJourney"
+             x:Class="ChineseJourney.Common.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-    	<Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
+     <RelativeLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10">
+     <StackLayout Orientation="Vertical" Margin="10,10,10,0"
+                  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.6}" 
+                  RelativeLayout.YConstraint="0"
+                  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4, Constant=-20}"
+                  RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-20}"
+                  >
+        <Picker HorizontalOptions="StartAndExpand" ItemsSource="{Binding BookList}" WidthRequest="200"
+                ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding ActiveBook}"/>
+
+        <forms1:CarouselView x:Name="QuestionView" BackgroundColor="Transparent"
+                             ItemsSource="{Binding QuestionList}" 
+                             Position="{Binding CurrentQuestionIndex, Mode=TwoWay}"
+        >
+            <forms1:CarouselView.ItemTemplate>
+                <DataTemplate>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal">
+                              <Label Text="{Binding Question}" FontSize="Large" Margin="0,0,0,0"/>
+                              <Image Source="{helpers:ImageResource speech}" 
+                                     WidthRequest="48" HeightRequest="48"
+                                     VerticalOptions="Center">
+                                  <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TextToSpeakCommand}" CommandParameter="{Binding Question}"/>
+                                  </Image.GestureRecognizers>
+                              </Image>
+                          </StackLayout>
+                          <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="80" Margin="10,10,0,0">
+                              <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="80">
+                                    <Label Text="(1)  " VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
+                                    <view:SwitchControl IsToggled="{Binding Answer1Selected}" VerticalOptions="Center"/>
+                                    <forms2:CachedImage Aspect="AspectFit" 
+                                                        HeightRequest = "80"
+                                                        Source="{Binding Answer1Image}"
+                                                        IsVisible="{Binding IsAnswer1ImageVisible}">
+                                        <forms2:CachedImage.Transformations>
+                                            <transformations:CircleTransformation/>
+                                        </forms2:CachedImage.Transformations>
+                                    </forms2:CachedImage>
+                                    <Label Text="{Binding Answer1}" VerticalOptions="Center" IsVisible="{Binding IsAnswer1TextVisible}" FontSize="Medium"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectAnswer1Command}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                              <Image Source="{helpers:ImageResource speech}" 
+                                     IsVisible="{Binding IsAnswer1TextVisible}" WidthRequest="48" HeightRequest="48"
+                                     VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TextToSpeakCommand}" CommandParameter="{Binding Answer1}"/>
+                                  </Image.GestureRecognizers>
+                                </Image>
+                              </StackLayout>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="80" Margin="10,10,0,0">
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="80">
+                                    <Label Text="(2)  " VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
+                                    <view:SwitchControl IsToggled="{Binding Answer2Selected}" VerticalOptions="Center"/>
+                                <forms2:CachedImage Aspect="AspectFit" 
+                                                    HeightRequest = "80"
+                                                    Source="{Binding Answer2Image}" 
+                                                   IsVisible="{Binding IsAnswer2ImageVisible}">
+                                    <forms2:CachedImage.Transformations>
+                                        <transformations:CircleTransformation/>
+                                    </forms2:CachedImage.Transformations>
+                                </forms2:CachedImage>
+                                <Label Text="{Binding Answer2}" VerticalOptions="Center"  IsVisible="{Binding IsAnswer2TextVisible}" FontSize="Medium"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectAnswer2Command}" />
+                                </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <Image Source="{helpers:ImageResource speech}" 
+                                       IsVisible="{Binding IsAnswer2TextVisible}" WidthRequest="48" HeightRequest="48"
+                                       VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TextToSpeakCommand}" CommandParameter="{Binding Answer2}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="80" Margin="10,10,0,0">
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="80">
+                                    <Label Text="(3)  " VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
+                            <view:SwitchControl IsToggled="{Binding Answer3Selected}" VerticalOptions="Center"/>
+                                <forms2:CachedImage Aspect="AspectFit" 
+                                                    HeightRequest = "80"
+                                                    Source="{Binding Answer3Image}" 
+                                                    IsVisible="{Binding IsAnswer3ImageVisible}">
+                                    <forms2:CachedImage.Transformations>
+                                        <transformations:CircleTransformation/>
+                                    </forms2:CachedImage.Transformations>
+                                </forms2:CachedImage>
+                                <Label Text="{Binding Answer3}"  VerticalOptions="Center" IsVisible="{Binding IsAnswer3TextVisible}" FontSize="Medium"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectAnswer3Command}" />
+                                </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <Image Source="{helpers:ImageResource speech}" 
+                                       IsVisible="{Binding IsAnswer3TextVisible}" WidthRequest="48" HeightRequest="48"
+                                       VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TextToSpeakCommand}" CommandParameter="{Binding Answer3}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="80" Margin="10,10,0,0">
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="80">
+                            <Label Text="(4)  " VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
+                            <view:SwitchControl IsToggled="{Binding Answer4Selected}" VerticalOptions="Center"/>
+                                <forms2:CachedImage Aspect="AspectFit" 
+                                                    HeightRequest = "80"
+                                                    Source="{Binding Answer4Image}" 
+                                                    IsVisible="{Binding IsAnswer4ImageVisible}">
+                                    <forms2:CachedImage.Transformations>
+                                        <transformations:CircleTransformation/>
+                                    </forms2:CachedImage.Transformations>
+                                </forms2:CachedImage>
+                                <Label Text="{Binding Answer4}" VerticalOptions="Center" IsVisible="{Binding IsAnswer4TextVisible}" FontSize="Medium"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectAnswer4Command}" />
+                                </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            <Image Source="{helpers:ImageResource speech}" 
+                                   IsVisible="{Binding IsAnswer4TextVisible}" WidthRequest="48" HeightRequest="48"
+                                   VerticalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TextToSpeakCommand}" CommandParameter="{Binding Answer4}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                            </StackLayout>
+                    </StackLayout>
+                </DataTemplate>
+            </forms1:CarouselView.ItemTemplate>
+        </forms1:CarouselView>
+         <StackLayout Orientation="Horizontal">
+                <Entry Text="{Binding TextToSpeak}" WidthRequest="200"/>
+                <Button Command="{Binding TextToSpeakCommand}" Text="Speak"></Button>
+            </StackLayout>
+        <view:CarouselIndicators IndicatorHeight="16" IndicatorWidth="16" 
+                                 HeightRequest="20"
+                                 UnselectedIndicator="unselected_circle.png" 
+                                 SelectedIndicator="selected_circle.png" 
+                                 Position="{Binding CurrentQuestionIndex}" ItemsSource="{Binding QuestionList}" />
+         <Label FontSize="Large" TextColor="DeepSkyBlue" Text="Let's start" HeightRequest="60" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="End"
+                VerticalOptions="Center" MinimumHeightRequest="60" Margin="0,0,0,10"/>
+        </StackLayout>
+        <forms:UrhoSurface x:Name="UrhoSurface"
+                           Margin="10,10,10,10"
+                           RelativeLayout.XConstraint="0" 
+                           RelativeLayout.YConstraint="0"
+                           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.6, Constant=-20}"
+                           RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-20}"
+                           />
+    </RelativeLayout>
 
 </ContentPage>
+
+
+

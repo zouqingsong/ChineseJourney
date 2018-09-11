@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:forms1="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:view="clr-namespace:ChineseJourney.Common.View;assembly=ChineseJourney"
+             xmlns:helpers="clr-namespace:ChineseJourney.Common.Helpers;assembly=ChineseJourney"
+             x:Class="ChineseJourney.Common.HanziPage">
+    <ContentPage.Content>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+            <view:SkiaSvgImage x:Name="HanziView" Grid.Row="0"  Grid.Column="0"  WidthRequest="512" HeightRequest="512" Image="{Binding HanZiImage}"/>
+            <StackLayout Grid.Row="0"  Grid.Column="1" Orientation="Vertical">
+                <Image Source="{helpers:ImageResource speech}"
+                       WidthRequest="48" HeightRequest="48">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding TextToSpeakCommand}" CommandParameter="{Binding Zi}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Animation" VerticalOptions="Center"/>
+                    <view:SwitchControl IsToggled="{Binding IsAnimationEnabled}" HeightRequest="30" VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Radical" VerticalOptions="Center"/>
+                    <view:SwitchControl IsToggled="{Binding IsHighlighRadialEnabled}" HeightRequest="30" VerticalOptions="Center"/>
+                </StackLayout>
+                <Entry Text="{Binding Zi}"></Entry>
+            </StackLayout>
+    </Grid>
+    </ContentPage.Content>
+</ContentPage>

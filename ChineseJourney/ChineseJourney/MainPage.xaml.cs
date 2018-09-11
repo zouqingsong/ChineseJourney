@@ -1,17 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChineseJourney.Common.Controller;
+using Urho;
 using Xamarin.Forms;
 
-namespace ChineseJourney
+namespace ChineseJourney.Common
 {
 	public partial class MainPage : ContentPage
 	{
-		public MainPage()
+	    UrhoPackage.Core.ShootingGame urhoApp;
+        Slider selectedBarSlider, rotationSlider;
+	    private BaobaoGameController _controller;
+        public MainPage()
 		{
+		    _controller = BaobaoGameController.Instance;
+		    BindingContext = _controller.DataModel;
 			InitializeComponent();
-		}
-	}
+        }
+	    protected override async void OnAppearing()
+	    {
+            
+	        if (Device.RuntimePlatform != Device.UWP)
+	        {
+	            urhoApp = await UrhoSurface.Show<UrhoPackage.Core.ShootingGame>(
+	                new ApplicationOptions(assetsFolder: "Data")
+	                {
+	                    Orientation = ApplicationOptions.OrientationType.LandscapeAndPortrait
+	                });
+	        }
+
+	        /*
+            foreach (var bar in urhoApp.Bars)
+            {
+                bar.Selected += OnBarSelection;
+            }*/
+        }
+    }
 }

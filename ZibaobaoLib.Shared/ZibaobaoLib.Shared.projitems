@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>aa19d94e-d488-4672-b0c4-c0b93dee84bf</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SamplyGame.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DiskStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlatformContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)X1LocalLogger.cs" />
+  </ItemGroup>
+</Project>
