@@ -29,6 +29,7 @@ namespace ChineseJourney.iOS
             PlatformContext.Init("iOS");
 
             Rg.Plugins.Popup.Popup.Init();
+            Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
 
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             var ignore = typeof(SvgCachedImage);

@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:forms1="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              xmlns:view="clr-namespace:ChineseJourney.Common.View;assembly=ChineseJourney"
              xmlns:helpers="clr-namespace:ChineseJourney.Common.Helpers;assembly=ChineseJourney"
              x:Class="ChineseJourney.Common.HanziPage">
@@ -29,7 +27,9 @@
                     <Label Text="Radical" VerticalOptions="Center"/>
                     <view:SwitchControl IsToggled="{Binding IsHighlighRadialEnabled}" HeightRequest="30" VerticalOptions="Center"/>
                 </StackLayout>
-                <Entry Text="{Binding Zi}"></Entry>
+                <Entry Text="{Binding Zi}"/>
+                <Label Text="{Binding UserNameString}"/>
+                <Button Text="Login" Command="{Binding LoginCommand}"/>
             </StackLayout>
     </Grid>
     </ContentPage.Content>

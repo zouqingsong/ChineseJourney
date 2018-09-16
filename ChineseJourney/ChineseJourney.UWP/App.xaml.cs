@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -65,6 +66,7 @@ namespace ChineseJourney.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 PlatformContext.Init("UWP");
+                Xamarin.Auth.Presenters.UWP.AuthenticationConfiguration.Init();
 
                 FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
                 var ignore = typeof(SvgCachedImage);
@@ -124,6 +126,23 @@ namespace ChineseJourney.UWP
                 ImageService.Instance.InvalidateMemoryCache();
                 GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
             }
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            // When the app was activated by a Protocol (custom URI scheme), forwards
+            // the URI to the MainPage through a Navigate event.
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                // Extracts the authorization response URI from the arguments.
+                ProtocolActivatedEventArgs protocolArgs = (ProtocolActivatedEventArgs)args;
+                Uri uri = protocolArgs.Uri;
+                Debug.WriteLine("Authorization Response: " + uri.AbsoluteUri);
+                AuthenticationState.Authenticator.OnPageLoading(uri);
+            }
+
+            Window.Current.Activate();
+            base.OnActivated(args);
         }
     }
 }

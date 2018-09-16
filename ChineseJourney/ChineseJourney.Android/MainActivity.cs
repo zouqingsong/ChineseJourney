@@ -26,8 +26,10 @@ namespace ChineseJourney.Droid
 
             PlatformContext.Init("Android");
 
-            ZibaobaoLibContext.Instance.PersistentStorage.DownloadPath = 
+            ZibaobaoLibContext.Instance.PersistentStorage.DownloadPath =
                 ApplicationContext.GetExternalFilesDir(Android.OS.Environment.DirectoryDownloads).AbsolutePath;
+
+            Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, bundle);
 
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             var ignore = typeof(SvgCachedImage);

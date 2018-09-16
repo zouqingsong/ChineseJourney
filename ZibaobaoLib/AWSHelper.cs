@@ -17,7 +17,6 @@ namespace ZibaobaoLib
         static CognitoAWSCredentials Credentials;
 
         static AWSHelper _instance;
-		
         public static AWSHelper Instance => _instance ?? (_instance = new AWSHelper());
 
         static AWSHelper()
