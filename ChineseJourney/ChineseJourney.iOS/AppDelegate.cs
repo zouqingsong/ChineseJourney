@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChineseJourney.Common;
+using ChineseJourney.Common.Helpers;
 using FFImageLoading;
 using FFImageLoading.Svg.Forms;
 using Foundation;
@@ -48,6 +49,18 @@ namespace ChineseJourney.iOS
         {
             ImageService.Instance.InvalidateMemoryCache();
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+        }
+
+        public override bool OpenUrl(
+           UIApplication application,
+           NSUrl url,
+           string sourceApplication,
+           NSObject annotation)
+        {
+            // Convert iOS NSUrl to C#/netxf/BCL System.Uri
+            var uri_netfx = new Uri(url.AbsoluteString);
+            AuthenticationState.Authenticator.OnPageLoading(uri_netfx);
+            return true;
         }
     }
 }

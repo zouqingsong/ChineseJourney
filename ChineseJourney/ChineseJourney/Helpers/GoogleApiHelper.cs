@@ -43,18 +43,13 @@ namespace ChineseJourney.Common.Helpers
                 string redirectUri = "";
                 switch (Device.RuntimePlatform)
                 {
-                    case Device.iOS:
-                        clientId = Constants.iOSClientId;
-                        redirectUri = Constants.iOSRedirectUrl;
-                        break;
-
                     case Device.Android:
                         clientId = Constants.AndroidClientId;
                         redirectUri = Constants.AndroidRedirectUrl;
                         break;
                     default:
-                        clientId = Constants.othersClientId;
-                        redirectUri = Constants.othersRedirectUrl;
+                        clientId = Constants.iOSClientId;
+                        redirectUri = Constants.iOSRedirectUrl;
                         break;
                 }
                 _authenticator = new OAuth2Authenticator(

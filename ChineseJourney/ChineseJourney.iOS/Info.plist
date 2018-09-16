@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>ChineseJourney</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.ChineseJourney</string>
+	<string>com.relaxingtech.ChineseJourney</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -34,5 +34,18 @@
 	<string>ChineseJourney</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Chinese Journey</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.relaxingtech.chinesejourney</string>
+			</array>
+			<key>CFBundleURLTypes</key>
+			<string>Viewer</string>
+		</dict>
+	</array>
 </dict>
 </plist>
