@@ -7,10 +7,6 @@
         public static string AndroidClientId = "725892070485-74q9j2grh10e84qn9pcodmj763evrb05.apps.googleusercontent.com";
         public static string AndroidRedirectUrl = "com.googleusercontent.apps.725892070485-74q9j2grh10e84qn9pcodmj763evrb05:/oauth2redirect";
 
-        //public static string iOSClientId = "725892070485-74q9j2grh10e84qn9pcodmj763evrb05.apps.googleusercontent.com";
-        // Set these to reversed iOS/Android client ids, with :/oauth2redirect appended
-        //public static string iOSRedirectUrl = "com.googleusercontent.apps.725892070485-74q9j2grh10e84qn9pcodmj763evrb05:/oauth2redirect";
-
         public static string iOSClientId = "725892070485-9ogfjh1pmig9ivl6b25pdqnehg4b146c.apps.googleusercontent.com";
         public static string iOSRedirectUrl = "com.relaxingtech.chinesejourney:/oauth2redirect";
 

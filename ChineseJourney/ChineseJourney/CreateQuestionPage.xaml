@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:ChineseJourney.Common.View;assembly=ChineseJourney"
+             x:Class="ChineseJourney.Common.CreateQuestionPage">
+    <ContentPage.Content>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0" Orientation="Vertical">
+                    <ListView Margin="10" ItemsSource="{Binding Path=BookList}" SelectedItem="{Binding Path=ActiveBook}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal">
+                                    <Entry Text="{Binding Name}" FontSize="16" Margin="10,0,0,0" WidthRequest="200"/>
+                                    <Entry Text="{Binding Description}" FontAttributes="Bold"  WidthRequest="200"/>
+                                </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,0" HorizontalOptions="Center" HeightRequest="40">
+                    <Button WidthRequest="200"  Command="{Binding AddPaperCommand}" Margin="0,0,10,0" BackgroundColor="Green" TextColor="White"  Text="New Paper"/>
+                    <Button WidthRequest="200" Command="{Binding SaveCommand}" Margin="0,0,0,0" BackgroundColor="Blue" TextColor="White" HorizontalOptions="End" Text="Save"/>
+                    </StackLayout>
+
+                    <ListView Margin="10" ItemsSource="{Binding QuestionList}" SelectedItem="{Binding CurrentQuestion}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Entry Text="{Binding Question}" Margin="10,0,0,0"/>
+                                </ViewCell>
+                        </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,0" HorizontalOptions="Center" HeightRequest="40">
+                        <Button WidthRequest="200" Command="{Binding AddQuestionCommand}" Margin="0,0,10,0" BackgroundColor="Green" TextColor="White" Text="New Question"/>
+                        <Button WidthRequest="200" Command="{Binding DeleteQuestionCommand}" Margin="0,0,0,0" BackgroundColor="Red" TextColor="White" Text="Delete Question"/>
+                    </StackLayout>
+
+                    <ListView Margin="10" ItemsSource="{Binding Path=AnswerList}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <view:SwitchControl IsToggled="{Binding IsAnswer}" VerticalOptions="Center"/>
+                                    <Entry Text="{Binding Value}"/>
+                                </StackLayout>
+                                </ViewCell>
+                        </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,0" HorizontalOptions="Center" HeightRequest="40">
+                        <Button WidthRequest="200" Command="{Binding AddAnswerCommand}" Margin="0,0,10,0" BackgroundColor="Green" TextColor="White" Text="New Answer"/>
+                        <Button WidthRequest="200" Command="{Binding DeleteAnswerCommand}" Margin="0,0,0,0" BackgroundColor="Red" TextColor="White" Text="Delete Answer"/>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>

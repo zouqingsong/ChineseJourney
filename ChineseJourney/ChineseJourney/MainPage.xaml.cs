@@ -8,11 +8,9 @@ namespace ChineseJourney.Common
 	{
 	    UrhoPackage.Core.ShootingGame urhoApp;
         Slider selectedBarSlider, rotationSlider;
-	    private BaobaoGameController _controller;
         public MainPage()
 		{
-		    _controller = BaobaoGameController.Instance;
-		    BindingContext = _controller.DataModel;
+		    BindingContext = BaobaoGameController.Instance.DataModel;
 			InitializeComponent();
         }
 	    protected override async void OnAppearing()

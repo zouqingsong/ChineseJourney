@@ -40,18 +40,6 @@ namespace ZibaobaoLib.Model
             AWSHelper.Instance.OnFileAvailable += Download_OnFileAvailable;
             AWSHelper.Instance.DownloadFile(Path.Combine(ResourceBase, IndexFileName),
                 Path.Combine(ZibaobaoLibContext.Instance.PersistentStorage.DownloadPath, IndexFileName)).Forget();
-
-            /*
-            string[] pinyinStr = PinyinHelper.ToHanyuPinyinStringArray('可', new HanyuPinyinOutputFormat
-            {
-                CaseType = HanyuPinyinCaseType.LOWERCASE,
-                ToneType = HanyuPinyinToneType.WITH_TONE_MARK,
-                VCharType = HanyuPinyinVCharType.WITH_U_UNICODE
-            });*/
-
-            //var t = ChineseChar.GetChars("fen1");
-
-            //var q = TinyPinyin.Core.PinyinHelper.GetPinyin("重要");
         }
 
         bool IsBookExist(string name)
@@ -214,9 +202,22 @@ namespace ZibaobaoLib.Model
             }
         }
 
-        private QuestionItem CurrentQuestion => CurrentQuestionIndex >= 0 & CurrentQuestionIndex < QuestionList.Count
-            ? QuestionList[CurrentQuestionIndex]
-            : null;
+        public QuestionItem CurrentQuestion
+        {
+            get
+            {
+                return CurrentQuestionIndex >= 0 & CurrentQuestionIndex < QuestionList.Count
+                    ? QuestionList[CurrentQuestionIndex]
+                    : new QuestionItem();
+            }
+            set
+            {
+                if (value != null)
+                {
+                    CurrentQuestionIndex = QuestionList.IndexOf(value);
+                }
+            }
+        } 
         public void LoadQuestions()
         {
             var currentQuestion = CurrentQuestion;

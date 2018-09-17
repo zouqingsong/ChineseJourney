@@ -1,3 +1,4 @@
+using ChineseJourney.Common.Controller;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -6,15 +7,18 @@ namespace ChineseJourney.Common
 {
 	public partial class App : Application
 	{
-		public App ()
+	    private BaobaoGameController _controller;
+        public App ()
 		{
 			InitializeComponent();
+		    _controller = BaobaoGameController.Instance;
+            //MainPage = new QuestionPage();
+            //MainPage = new HanziPage();
+            //MainPage = new CreateQuestionPage();
+		    MainPage = new ChineseJourneyTaskPage();
+        }
 
-			//MainPage = new QuestionPage();
-            MainPage = new HanziPage();
-		}
-
-		protected override void OnStart ()
+        protected override void OnStart ()
 		{
 			// Handle when your app starts
 		}
