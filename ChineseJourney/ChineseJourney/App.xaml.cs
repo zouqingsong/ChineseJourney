@@ -15,7 +15,8 @@ namespace ChineseJourney.Common
             //MainPage = new QuestionPage();
             //MainPage = new HanziPage();
             //MainPage = new CreateQuestionPage();
-		    MainPage = new ChineseJourneyTaskPage();
+            //MainPage = new ChineseJourneyTaskPage();
+		    MainPage = new MasterDetailPage1();
         }
 
         protected override void OnStart ()
