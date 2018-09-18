@@ -19,9 +19,6 @@ namespace ChineseJourney.Common.Model
         int _strokeCount = -1;
         bool _isHighlighRadialEnabled = true;
         bool _isAnimationEnabled;
-        GoogleApiHelper _googleApiHelper = new GoogleApiHelper();
-        ICommand _loginCommand;
-        private BaobaoUser _user;
 
         public SKSvg HanZiImage
         {
@@ -47,24 +44,7 @@ namespace ChineseJourney.Common.Model
                 return _hanZiImage;
             }
         }
-
-        public HanZiModel()
-        {
-            _googleApiHelper.OnUserLogin += _googleApiHelper_OnUserLogin;
-            if (_googleApiHelper.CanAutoLogin)
-            {
-                _googleApiHelper.LoginUser();
-            }
-        }
-
-        void _googleApiHelper_OnUserLogin(object sender, UserLoginEventArgs e)
-        {
-            _user = e.User;
-            OnPropertyChanged(nameof(UserNameString));
-        }
-
-        public string UserNameString => _user != null ? $"{_user.name}[{_user.email}]" : "not login"; 
-
+ 
         public bool IsHighlighRadialEnabled
         {
             get => _isHighlighRadialEnabled;
@@ -108,11 +88,6 @@ namespace ChineseJourney.Common.Model
             }
         }
 
-
-        public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new Command(() =>
-        {
-            _googleApiHelper.LoginUser(true);
-        }));
         void RefreshDisplay()
         {
             _currentStroke = 0;

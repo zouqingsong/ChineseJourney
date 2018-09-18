@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using ChineseJourney.Common.Model;
 using Xamarin.Forms;
 using ZibaobaoLib;
 using ZibaobaoLib.Helpers;
@@ -14,7 +15,7 @@ namespace ChineseJourney.Common.Controller
         //public const string HttpResourceBase = "http://www.doitech.com/liufen/lesson/" + ResourceBase + "/";
         protected BaobaoGameController()
         {
-            DataModel = new BaobaoModel(BookListName);
+            DataModel = new MasterViewModel(BookListName);
             DownloadController.Instance.OnFileAvailable += DataModel.Download_OnFileAvailable;
             var hanziList = HanziStrokeController.Instance.HanZi;
             //DownloadController.Instance.DownloadResource(DownloadController.BookListName);
@@ -58,7 +59,7 @@ namespace ChineseJourney.Common.Controller
                 tcs.SetException(ex);
             }
         }
-        public BaobaoModel DataModel { get;}
+        public MasterViewModel DataModel { get;}
         static BaobaoGameController _instance;
         public static BaobaoGameController Instance => _instance?? (_instance = new BaobaoGameController());
     }

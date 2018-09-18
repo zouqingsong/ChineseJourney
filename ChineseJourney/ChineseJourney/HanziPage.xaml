@@ -28,8 +28,6 @@
                     <view:SwitchControl IsToggled="{Binding IsHighlighRadialEnabled}" HeightRequest="30" VerticalOptions="Center"/>
                 </StackLayout>
                 <Entry Text="{Binding Zi}"/>
-                <Label Text="{Binding UserNameString}"/>
-                <Button Text="Login" Command="{Binding LoginCommand}"/>
             </StackLayout>
     </Grid>
     </ContentPage.Content>

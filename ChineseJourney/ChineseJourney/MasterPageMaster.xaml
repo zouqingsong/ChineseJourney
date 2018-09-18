@@ -16,16 +16,18 @@
             <ColumnDefinition Width="10"/>
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
             <RowDefinition Height="80"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
           </Grid.RowDefinitions>
           <Label
               Grid.Column="1"
               Grid.Row="0"
-              Text="字宝宝"
+              Text="Zibaobao"
               Style="{DynamicResource SubtitleStyle}"/>
+          <Button Grid.Column="1" Grid.Row="1" Text="{Binding UserNameString}" Command="{Binding LoginCommand}"/>
+
         </Grid>
       </ListView.Header>
       <ListView.ItemTemplate>
