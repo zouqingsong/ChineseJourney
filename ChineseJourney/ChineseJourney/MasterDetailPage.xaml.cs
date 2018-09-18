@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace ChineseJourney.Common
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MasterDetailPage1 : MasterDetailPage
+    public partial class MasterDetailPage : Xamarin.Forms.MasterDetailPage
     {
-        public MasterDetailPage1()
+        public MasterDetailPage()
         {
             InitializeComponent();
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
@@ -20,7 +20,7 @@ namespace ChineseJourney.Common
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as MasterDetailPage1MenuItem;
+            var item = e.SelectedItem as MasterMenuItem;
             if (item == null)
                 return;
 

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChineseJourney.Common
 {
-
-    public class MasterDetailPage1MenuItem
+    public class MasterMenuItem
     {
-        public MasterDetailPage1MenuItem()
+        public MasterMenuItem()
         {
-            TargetType = typeof(MasterDetailPage1Detail);
+            TargetType = typeof(MasterDetailPageDetail);
         }
         public int Id { get; set; }
         public string Title { get; set; }

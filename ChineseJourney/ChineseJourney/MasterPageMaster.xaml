@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ChineseJourney.Common.MasterDetailPage1Master"
+             x:Class="ChineseJourney.Common.MasterPageMaster"
              Title="Master">
   <StackLayout>
     <ListView x:Name="MenuItemsListView"
@@ -23,8 +23,8 @@
           </Grid.RowDefinitions>
           <Label
               Grid.Column="1"
-              Grid.Row="2"
-              Text="AppName"
+              Grid.Row="0"
+              Text="字宝宝"
               Style="{DynamicResource SubtitleStyle}"/>
         </Grid>
       </ListView.Header>

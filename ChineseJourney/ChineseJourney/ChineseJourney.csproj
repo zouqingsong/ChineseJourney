@@ -87,7 +87,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="MasterDetailPage1MenuItem.cs">
+    <Compile Update="MasterDetailPage.xaml.cs">
+      <DependentUpon>MasterDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="MasterDetailPageDetail.xaml.cs">
+      <DependentUpon>MasterDetailPageDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="MasterPageMaster.xaml.cs">
+      <DependentUpon>MasterPageMaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Model\MasterMenuItem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="QuestionPage.xaml.cs">
@@ -105,13 +114,13 @@
     <EmbeddedResource Update="HanziPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MasterDetailPage1.xaml">
+    <EmbeddedResource Update="MasterDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MasterDetailPage1Detail.xaml">
+    <EmbeddedResource Update="MasterDetailPageDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MasterDetailPage1Master.xaml">
+    <EmbeddedResource Update="MasterPageMaster.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

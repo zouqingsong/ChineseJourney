@@ -11,7 +11,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-            <view:SkiaSvgImage x:Name="HanziView" Grid.Row="0"  Grid.Column="0"  WidthRequest="512" HeightRequest="512" Image="{Binding HanZiImage}"/>
+            <view:SkiaSvgImage x:Name="HanziView" Grid.Row="0"  Grid.Column="0"  WidthRequest="128" HeightRequest="128" Image="{Binding HanZiImage}"/>
             <StackLayout Grid.Row="0"  Grid.Column="1" Orientation="Vertical">
                 <Image Source="{helpers:ImageResource speech}"
                        WidthRequest="48" HeightRequest="48">
