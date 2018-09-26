@@ -13,6 +13,7 @@ namespace ChineseJourney.Common
             InitializeComponent();
             MasterBehavior = MasterBehavior.Popover;
             App.NavigationPage = NavigationPage;
+            NavigationPage.ToolbarItems.Add(new ToolbarItem {Text = "Test"});
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
         }
 
