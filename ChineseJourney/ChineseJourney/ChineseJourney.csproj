@@ -25,6 +25,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="DashboardPage.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="DashboardPage.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\all.txt" />
     <None Remove="Resources\dictionary.txt" />
     <None Remove="Resources\graphics.txt" />
@@ -87,14 +95,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="MasterDetailPage.xaml.cs">
-      <DependentUpon>MasterDetailPage.xaml</DependentUpon>
+    <Compile Update="RootPage.xaml.cs">
+      <DependentUpon>RootPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="MasterDetailPageDetail.xaml.cs">
-      <DependentUpon>MasterDetailPageDetail.xaml</DependentUpon>
+    <Compile Update="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="MasterPageMaster.xaml.cs">
-      <DependentUpon>MasterPageMaster.xaml</DependentUpon>
+    <Compile Update="MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Model\MasterMenuItem.cs">
       <SubType>Code</SubType>
@@ -114,13 +122,13 @@
     <EmbeddedResource Update="HanziPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MasterDetailPage.xaml">
+    <EmbeddedResource Update="RootPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MasterDetailPageDetail.xaml">
+    <EmbeddedResource Update="HomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MasterPageMaster.xaml">
+    <EmbeddedResource Update="MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ChineseJourney.Common.MasterPageMaster"
+             x:Class="ChineseJourney.Common.MenuPage"
              Title="Master">
-  <StackLayout>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+    </ContentPage.Padding>
+    <StackLayout>
     <ListView x:Name="MenuItemsListView"
               SeparatorVisibility="None"
               HasUnevenRows="true"
@@ -27,7 +30,6 @@
               Text="Zibaobao"
               Style="{DynamicResource SubtitleStyle}"/>
           <Button Grid.Column="1" Grid.Row="1" Text="{Binding UserNameString}" Command="{Binding LoginCommand}"/>
-
         </Grid>
       </ListView.Header>
       <ListView.ItemTemplate>

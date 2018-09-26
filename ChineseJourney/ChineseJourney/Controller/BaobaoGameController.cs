@@ -15,7 +15,7 @@ namespace ChineseJourney.Common.Controller
         //public const string HttpResourceBase = "http://www.doitech.com/liufen/lesson/" + ResourceBase + "/";
         protected BaobaoGameController()
         {
-            DataModel = new MasterViewModel(BookListName);
+            DataModel = new MenuPageViewModel(BookListName);
             DownloadController.Instance.OnFileAvailable += DataModel.Download_OnFileAvailable;
             var hanziList = HanziStrokeController.Instance.HanZi;
             //DownloadController.Instance.DownloadResource(DownloadController.BookListName);
@@ -59,7 +59,7 @@ namespace ChineseJourney.Common.Controller
                 tcs.SetException(ex);
             }
         }
-        public MasterViewModel DataModel { get;}
+        public MenuPageViewModel DataModel { get;}
         static BaobaoGameController _instance;
         public static BaobaoGameController Instance => _instance?? (_instance = new BaobaoGameController());
     }

@@ -7,7 +7,15 @@ namespace ChineseJourney.Common
 {
 	public partial class App : Application
 	{
-	    private BaobaoGameController _controller;
+	    public static NavigationPage NavigationPage { get; set; }
+	    private static RootPage RootPage;
+	    public static bool MenuIsPresented
+	    {
+	        get => RootPage.IsPresented;
+	        set => RootPage.IsPresented = value;
+	    }
+
+        private BaobaoGameController _controller;
         public App ()
 		{
 			InitializeComponent();
@@ -16,7 +24,12 @@ namespace ChineseJourney.Common
             //MainPage = new HanziPage();
             //MainPage = new CreateQuestionPage();
             //MainPage = new ChineseJourneyTaskPage();
-		    MainPage = new MasterDetailPage();
+		    RootPage = new RootPage();
+            //var menuPage = new MenuPage();
+		    //NavigationPage = new NavigationPage(new HomePage());
+		    //RootPage.Master = menuPage;
+		    //ootPage.Detail = NavigationPage;
+		    MainPage = RootPage;
         }
 
         protected override void OnStart ()
