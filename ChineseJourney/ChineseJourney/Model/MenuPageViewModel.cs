@@ -11,34 +11,42 @@ namespace ChineseJourney.Common.Model
     {
         GoogleApiHelper _googleApiHelper = new GoogleApiHelper();
         ICommand _loginCommand;
-        BaobaoUser _user;
+        UserAccount _userAccount;
 
         public ObservableCollection<MasterMenuItem> MenuItems { get; set; }
         public MenuPageViewModel(string indexFileName) : base(indexFileName)
         {
+            _userAccount = new UserAccount();
             MenuItems = new ObservableCollection<MasterMenuItem>(new[]
             {
                 new MasterMenuItem {Title = "Spelling", TargetType = typeof(HanziPage)},
                 new MasterMenuItem {Title = "Exam", TargetType = typeof(QuestionPage)},
             });
             _googleApiHelper.OnUserLogin += _googleApiHelper_OnUserLogin;
-            if (_googleApiHelper.CanAutoLogin)
-            {
-                _googleApiHelper.LoginUser();
-            }
         }
 
         void _googleApiHelper_OnUserLogin(object sender, UserLoginEventArgs e)
         {
-            _user = e.User;
+            _userAccount.Account = e.Account;
+            _userAccount.Name = e.User.name;
+            _userAccount.Email = e.User.email;
+            _userAccount.Save();
             OnPropertyChanged(nameof(UserNameString));
         }
 
-        public string UserNameString => _user != null ? $"{_user.name}[{_user.email}]" : "not login";
+        public string UserNameString => !IsAccountValid ? "[login]" : $"{_userAccount.Email} [logout]";
+
+        public bool IsAccountValid => !string.IsNullOrEmpty(_userAccount.Email);
 
         public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new Command(() =>
         {
-            _googleApiHelper.LoginUser(true);
+            bool isAccountValid = IsAccountValid;
+            _userAccount.Reset();
+            OnPropertyChanged(nameof(UserNameString));
+            if (!isAccountValid)
+            {
+                _googleApiHelper.LoginUser(true);
+            }
         }));
     }
 }
