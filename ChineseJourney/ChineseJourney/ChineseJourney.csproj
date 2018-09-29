@@ -95,6 +95,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="CreateSpellingPage.xaml.cs">
+      <DependentUpon>CreateSpellingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="RootPage.xaml.cs">
       <DependentUpon>RootPage.xaml</DependentUpon>
     </Compile>
