@@ -22,26 +22,24 @@ namespace ChineseJourney.Common.View
             set { SetValue(ForceToLeftProperty, value); }
         }
 
-        private SKSvg _image;
-
         public double ZoomFactor { get; set; } = 1.0f;
         private static void ImageChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var c = bindable as SkiaSvgImage;
             if (c != null)
             {
-                c._image = newValue as SKSvg;
+                c.Image = newValue as SKSvg;
                 c.InvalidateSurface();
             }
         }
 
-        public SKSvg Image => _image;
+        public SKSvg Image { get; set; }
 
         public SKRect Bound { get; set; }
 
         void ImageDisplayControl_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
-            if (_image != null)
+            if (Image != null)
             {
                 var surface = e.Surface;
                 var canvas = surface.Canvas;
@@ -54,12 +52,12 @@ namespace ChineseJourney.Common.View
 
                 // calculate the scaling need to fit to screen
                 float canvasMin = Math.Min(width, height);
-                float svgMax = Math.Max(_image.Picture.CullRect.Width, _image.Picture.CullRect.Height);
+                float svgMax = Math.Max(Image.Picture.CullRect.Width, Image.Picture.CullRect.Height);
                 float scale = canvasMin / svgMax;
                 var matrix = SKMatrix.MakeScale(scale, scale);
 
                 // draw the svg
-                canvas.DrawPicture(_image.Picture, ref matrix);
+                canvas.DrawPicture(Image.Picture, ref matrix);
             }
         }
 

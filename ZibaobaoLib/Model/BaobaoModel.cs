@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using ZibaobaoLib.Annotations;
 using ZibaobaoLib.Data;
 using ZibaobaoLib.Helpers;
 
@@ -19,7 +16,15 @@ namespace ZibaobaoLib.Model
         public const string LocalPathPrefix = "file://";
         Dictionary<BaobaoBook, ExamPaper> _books = new Dictionary<BaobaoBook, ExamPaper>();
         public ObservableCollection<BaobaoBook> BookList { get; } = new ObservableCollection<BaobaoBook>();
+        public ObservableCollection<SpellingList> SpellingList { get; } = new ObservableCollection<SpellingList>();
+
+        public ObservableCollection<string> SpellingWordList { get; } = new ObservableCollection<string>();
+
+        public ObservableCollection<string> SpellingZiList { get; } = new ObservableCollection<string>();
+
         BaobaoBook _activeBook;
+        SpellingList _activeSpellingList = new SpellingList();
+
 
         public ObservableCollection<QuestionItem> QuestionList { get; } = new ObservableCollection<QuestionItem>();
 
@@ -35,6 +40,7 @@ namespace ZibaobaoLib.Model
             X1LogHelper.LogLevel = (int)X1EventLogEntryType.Verbose;
             _localBookList = FileSettingsHelper<BaobaoBookList>.LoadSetting() ?? new BaobaoBookList();
             IndexFileName = indexFileName;
+            SpellingList = new ObservableCollection<SpellingList>(SpellingListHelper.GenerateDemo());
             UpdateBookList(false);
 
             AWSHelper.Instance.OnFileAvailable += Download_OnFileAvailable;
@@ -202,6 +208,26 @@ namespace ZibaobaoLib.Model
             }
         }
 
+
+        public SpellingList ActiveSpellingList
+        {
+            get => _activeSpellingList;
+            set
+            {
+                if (_activeSpellingList != value)
+                {
+                    _activeSpellingList = value;
+                    SpellingWordList.Clear();
+                    foreach (var word in _activeSpellingList.Words)
+                    {
+                        SpellingWordList.Add(word);
+                    }
+                    OnPropertyChanged();
+                    CurrentSpellingWord = SpellingWordList.Count > 0 ? SpellingWordList[0] : string.Empty;
+                }
+            }
+        }
+
         public QuestionItem CurrentQuestion
         {
             get
@@ -217,7 +243,41 @@ namespace ZibaobaoLib.Model
                     CurrentQuestionIndex = QuestionList.IndexOf(value);
                 }
             }
-        } 
+        }
+
+        public string CurrentSpellingWord
+        {
+            get => SpellingWordList.Count >= 0 & CurrentSpellingWordIndex < SpellingWordList.Count
+                ? SpellingWordList[CurrentSpellingWordIndex]
+                : string.Empty;
+            set
+            {
+                if (value != null)
+                {
+                    SpellingZiList.Clear();
+                    foreach (var zi in value.ToCharArray())
+                    {
+                        SpellingZiList.Add(zi.ToString());
+                    }
+                    CurrentSpellingWordIndex = SpellingWordList.IndexOf(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int CurrentSpellingWordIndex
+        {
+            get => _currentSpellingWordIndex;
+            set
+            {
+                if (_currentSpellingWordIndex != value)
+                {
+                    _currentSpellingWordIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public void LoadQuestions()
         {
             var currentQuestion = CurrentQuestion;
@@ -284,6 +344,8 @@ namespace ZibaobaoLib.Model
         }
 
         object _updateBookLock = new object();
+        private int _currentSpellingWordIndex;
+
         void UpdateBookList(bool setActive=true)
         {
             lock (_updateBookLock)

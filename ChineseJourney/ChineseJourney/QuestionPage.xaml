@@ -4,8 +4,6 @@
              xmlns:forms="clr-namespace:Urho.Forms;assembly=Urho.Forms"
              xmlns:forms1="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
              xmlns:view="clr-namespace:ChineseJourney.Common.View;assembly=ChineseJourney"
-             xmlns:forms2="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:helpers="clr-namespace:ChineseJourney.Common.Helpers;assembly=ChineseJourney"
              x:Class="ChineseJourney.Common.QuestionPage">
 

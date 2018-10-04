@@ -35,6 +35,7 @@ namespace ChineseJourney.iOS
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             var ignore = typeof(SvgCachedImage);
             global::Xamarin.Forms.Forms.Init();
+            AiForms.Layouts.LayoutsInit.Init();  //need to write here
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

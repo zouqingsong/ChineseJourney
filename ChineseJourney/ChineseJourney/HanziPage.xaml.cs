@@ -20,9 +20,8 @@ namespace ChineseJourney.Common
 		{
 			InitializeComponent ();
 		    Model  = new HanZiModel();
-		    BindingContext = Model;
-		    Model.IsAnimationEnabled = true;
-            Model.Zi = "赢";
+		    Model.Zi = "学习华文";
+            BindingContext = Model;
 		}
 	    private HanZiModel Model { get; }
     }

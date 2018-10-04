@@ -38,9 +38,6 @@
     <None Remove="Resources\graphics.txt" />
     <None Remove="Resources\selected_circle.png" />
     <None Remove="Resources\speech.png" />
-    <None Remove="Resources\svgs\11904.svg" />
-    <None Remove="Resources\svgs\19518.svg" />
-    <None Remove="Resources\svgs\hanzi.svg" />
     <None Remove="Resources\unselected_circle.png" />
   </ItemGroup>
 
@@ -50,12 +47,11 @@
     <EmbeddedResource Include="Resources\selected_circle.png" />
     <EmbeddedResource Include="Resources\speech.png" />
     <EmbeddedResource Include="Resources\hanzi.svg" />
-    <EmbeddedResource Include="Resources\svgs\11904.svg" />
-    <EmbeddedResource Include="Resources\svgs\19518.svg" />
     <EmbeddedResource Include="Resources\unselected_circle.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AiForms.Layouts" Version="1.1.0" />
     <PackageReference Include="AWSSDK.CognitoIdentity" Version="3.3.2.32" />
     <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.3.11.1" />
     <PackageReference Include="AWSSDK.CognitoSync" Version="3.3.1.41" />
@@ -97,6 +93,9 @@
   <ItemGroup>
     <Compile Update="CreateSpellingPage.xaml.cs">
       <DependentUpon>CreateSpellingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="SpellingSliderShowPage.xaml.cs">
+      <DependentUpon>SpellingSliderShowPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="RootPage.xaml.cs">
       <DependentUpon>RootPage.xaml</DependentUpon>

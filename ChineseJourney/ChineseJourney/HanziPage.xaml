@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:view="clr-namespace:ChineseJourney.Common.View;assembly=ChineseJourney"
              xmlns:helpers="clr-namespace:ChineseJourney.Common.Helpers;assembly=ChineseJourney"
+             xmlns:layouts="clr-namespace:AiForms.Layouts;assembly=AiForms.Layouts"
              x:Class="ChineseJourney.Common.HanziPage">
     <ContentPage.Content>
     <Grid>
@@ -11,7 +12,22 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-            <view:SkiaSvgImage x:Name="HanziView" Grid.Row="0"  Grid.Column="0"  WidthRequest="128" HeightRequest="128" Image="{Binding HanZiImage}"/>
+
+          <StackLayout Grid.Row="0"  Grid.Column="0">
+            <ScrollView HorizontalOptions="FillAndExpand">
+                <layouts:RepeatableWrapLayout
+                    ItemTapCommand="{Binding TapCommand}"
+                    ItemsSource="{Binding Zi}"
+                    Spacing="3" UniformColumns="{Binding UniformColumns}"
+                    IsSquare="true" >
+                    <layouts:RepeatableWrapLayout.ItemTemplate>
+                        <DataTemplate>
+                                <view:HanZiImage WidthRequest="128" HeightRequest="128" Zi="{Binding .}" IsHighlighRadialEnabled="{Binding IsHighlighRadialEnabled}"/>
+                        </DataTemplate>
+                    </layouts:RepeatableWrapLayout.ItemTemplate>
+                </layouts:RepeatableWrapLayout>
+            </ScrollView>
+        </StackLayout>
             <StackLayout Grid.Row="0"  Grid.Column="1" Orientation="Vertical">
                 <Image Source="{helpers:ImageResource speech}"
                        WidthRequest="48" HeightRequest="48">
