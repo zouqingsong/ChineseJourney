@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Amazon;
 using Amazon.CognitoIdentity;
@@ -9,6 +12,10 @@ using ZibaobaoLib.Helpers;
 
 namespace ZibaobaoLib
 {
+    public interface FileHandler
+    {
+        void OnFileAvailable(string path, string content=null);
+    }
     public class AWSHelper
     {
         static string ZibaobaoBucket = "relaxingtech.com";
@@ -18,6 +25,8 @@ namespace ZibaobaoLib
 
         static AWSHelper _instance;
         public static AWSHelper Instance => _instance ?? (_instance = new AWSHelper());
+
+        Dictionary<string, FileHandler> _fileHandlers = new Dictionary<string, FileHandler>();
 
         static AWSHelper()
         {
@@ -36,13 +45,16 @@ namespace ZibaobaoLib
                 null,
                 RegionEndpoint.APSoutheast1 // Region
             );
+
+            //key id: AKIAJ73CRJAXPE2TXXOQ
+            //access: eVatiCgh8cCGQ8uyAGCpWF8lR5SYGC542kXiCBCo
         }
 
         public IAmazonS3 AWSS3Client => new AmazonS3Client(Credentials, RegionEndpoint.APSoutheast1);
         public TransferUtility AWSS3TransferClient => new TransferUtility(AWSS3Client);
         public async Task AddBucket(string remotePath)
         {
-            remotePath = remotePath.ToLower().Replace("\\", "/");
+            remotePath = ConvertToRemotePath(remotePath);
             using (var s3Client = AWSS3Client)
             {
                 var listOfBuckets = await s3Client.ListBucketsAsync();
@@ -68,6 +80,59 @@ namespace ZibaobaoLib
                 }
             }
         }
+
+        public static string ConvertToRemotePath(string localPath)
+        {
+            return localPath.Replace("\\", "/");
+        }
+
+        public async Task<List<string>> ListFiles(string remotePath, bool includingFolder=false,bool includingFiles=true)
+        {
+            var list = new List<string>();
+            try
+            {
+                using (var s3Client = AWSS3Client)
+                {
+                    remotePath = ConvertToRemotePath(remotePath);
+                    try
+                    {
+                        var response = await s3Client.ListObjectsAsync(ZibaobaoBucket, remotePath);
+                        {
+                            foreach (var s3Object in response.S3Objects)
+                            {
+                                var name = s3Object.Key;
+                                if (!includingFolder && name.EndsWith("/"))
+                                {
+                                    continue;
+                                }
+                                if (!includingFiles && !name.EndsWith("/"))
+                                {
+                                    continue;
+                                }
+                                if (name.StartsWith(remotePath))
+                                {
+                                    var localPath = name.Substring(remotePath.Length).Trim('/');
+                                    if (!string.IsNullOrEmpty(localPath))
+                                    {
+                                        list.Add(localPath);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (AmazonS3Exception e)
+                    {
+                        X1LogHelper.Exception(e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                X1LogHelper.Exception(ex);
+            }
+            return list;
+        }
+
         public async Task UploadFile(string remotePath, string localPath)
         {
             try
@@ -76,7 +141,7 @@ namespace ZibaobaoLib
                 {
                     using (var dataStream = ZibaobaoLibContext.Instance.PersistentStorage.LoadContent(localPath))
                     {
-                        remotePath = remotePath.Replace("\\", "/");
+                        remotePath = ConvertToRemotePath(remotePath);
                         var request = new PutObjectRequest
                         {
                             BucketName = ZibaobaoBucket,
@@ -114,7 +179,7 @@ namespace ZibaobaoLib
             {
                 using (var s3Client = AWSS3Client)
                 {
-                    remotePath = remotePath.Replace("\\", "/");
+                    remotePath = ConvertToRemotePath(remotePath);
                     var request = new PutObjectRequest
                     {
                         BucketName = ZibaobaoBucket,
@@ -137,18 +202,21 @@ namespace ZibaobaoLib
                 System.Diagnostics.Debug.WriteLine("=====ERROR ========");
             }
         }
-
-        public async Task DownloadFile(string remotePath, string localPath)
+        public async Task DownloadFile(string remotePath, string localPath=null, FileHandler handler = null)
         {
             try
             {
+                var pathKey = localPath ?? remotePath;
                 using (var s3Client = AWSS3Client)
                 {
-                    remotePath = remotePath.Replace("\\", "/");
+                    if (handler != null)
+                    {
+                        _fileHandlers[pathKey] = handler;
+                    }
                     var request = new GetObjectRequest
                     {
                         BucketName = ZibaobaoBucket,
-                        Key = remotePath
+                        Key = ConvertToRemotePath(remotePath)
                     };
 
                     try
@@ -156,30 +224,37 @@ namespace ZibaobaoLib
                         using (var response = await s3Client.GetObjectAsync(request))
                         {
                             response.WriteObjectProgressEvent += Request_WriteObjectProgressEvent;
+                            string content = null;
                             using (var stream = response.ResponseStream)
                             {
-                                ZibaobaoLibContext.Instance.PersistentStorage.SaveContent(localPath, stream);
+                                if (!string.IsNullOrEmpty(localPath))
+                                {
+                                    ZibaobaoLibContext.Instance.PersistentStorage.SaveContent(localPath, stream);
+                                }
+                                else
+                                {
+                                    using (var reader = new StreamReader(stream))
+                                    {
+                                        content = reader.ReadToEnd();
+                                    }
+                                }
                             }
-                            OnFileAvailable?.Invoke(this, new StringEventArgs(localPath));
+
+                            if (_fileHandlers.ContainsKey(pathKey))
+                            {
+                                _fileHandlers[pathKey].OnFileAvailable(pathKey, content);
+                                _fileHandlers.Remove(pathKey);
+                            }
+                            else
+                            {
+                                OnFileAvailable?.Invoke(this, new StringEventArgs(pathKey));
+                            }
                         }
                     }
                     catch (AmazonS3Exception s3Exception)
                     {
+                        X1LogHelper.Exception(s3Exception);
                     }
-
-                    /*
-                    localPath = localPath.Replace(BaobaoGameContextFactory.Instance.PersistentStorage.PersonalPath, "").Trim('\\', '/');
-                    TransferUtilityDownloadRequest request = new TransferUtilityDownloadRequest
-                    {
-                        BucketName = ZibaobaoBucket,
-                        Key = remotePath,
-                        FilePath = localPath,
-                    };
-                    request.WriteObjectProgressEvent += Request_WriteObjectProgressEvent;
-                    using (var client = new TransferUtility(s3Client))
-                    {
-                        await client.DownloadAsync(request);
-                    }*/
                 }
             }
             catch (Exception ex)

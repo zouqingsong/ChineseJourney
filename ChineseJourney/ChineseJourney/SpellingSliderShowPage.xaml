@@ -6,34 +6,33 @@
              xmlns:layouts="clr-namespace:AiForms.Layouts;assembly=AiForms.Layouts"
              x:Class="ChineseJourney.Common.SpellingSliderShowPage">
      <RelativeLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-     <StackLayout Orientation="Vertical" Margin="10,10,10,0"
+     <StackLayout Orientation="Vertical" Margin="0,0,0,0"
                   RelativeLayout.XConstraint="0" 
                   RelativeLayout.YConstraint="0"
                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
                   RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"
                   >
          <Picker HorizontalOptions="StartAndExpand" ItemsSource="{Binding SpellingList}" WidthRequest="200"
-                ItemDisplayBinding="{Binding Title}" SelectedItem="{Binding ActiveSpellingList}"/>
+                SelectedItem="{Binding ActiveSpellingList}"/>
 
         <forms1:CarouselView x:Name="SpellingListView" BackgroundColor="Transparent"
                              ItemsSource="{Binding SpellingWordList}" 
                              Position="{Binding CurrentSpellingWordIndex, Mode=TwoWay}">
             <forms1:CarouselView.ItemTemplate>
                 <DataTemplate>
-                            <StackLayout Orientation="Horizontal" Padding="0,10,10,10">
-                                <ScrollView HorizontalOptions="FillAndExpand">
-                                    <layouts:RepeatableWrapLayout
-                                        ItemTapCommand="{Binding TapCommand}"
-                                        ItemsSource="{Binding .}"
-                                        Spacing="3" IsSquare="true" >
-                                        <layouts:RepeatableWrapLayout.ItemTemplate>
-                                            <DataTemplate>
-                                                <view:HanZiImage WidthRequest="64" HeightRequest="64" Zi="{Binding .}" IsHighlighRadialEnabled="true"/>
-                                            </DataTemplate>
-                                        </layouts:RepeatableWrapLayout.ItemTemplate>
-                                    </layouts:RepeatableWrapLayout>
-                                </ScrollView>
-                            </StackLayout>
+                    <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <layouts:RepeatableWrapLayout
+                            ItemTapCommand="{Binding TapCommand}"
+                            ItemsSource="{Binding .}"
+                            Spacing="3" IsSquare="true" 
+                            HorizontalOptions="CenterAndExpand">
+                            <layouts:RepeatableWrapLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <view:HanZiImage WidthRequest="128" HeightRequest="128" Zi="{Binding .}" IsHighlighRadialEnabled="false" IsAnimationEnabled="True"/>
+                                </DataTemplate>
+                            </layouts:RepeatableWrapLayout.ItemTemplate>
+                        </layouts:RepeatableWrapLayout>
+                    </ScrollView>
                 </DataTemplate>
             </forms1:CarouselView.ItemTemplate>
         </forms1:CarouselView>

@@ -9,7 +9,8 @@ namespace ChineseJourney.Common
 	{
         public SpellingSliderShowPage()
 		{
-		    BindingContext = BaobaoGameController.Instance.DataModel;
+		    App.NavigationPage.ToolbarItems.Add(new ToolbarItem { Text = "Test",Order = ToolbarItemOrder.Primary,Priority = 0});
+            BindingContext = BaobaoGameController.Instance.DataModel.BaobaoSpellingModel;
 			InitializeComponent();
         }
     }

@@ -15,7 +15,7 @@ namespace ChineseJourney.Common
 		public CreateSpellingPage()
 		{
 			InitializeComponent ();
-		    BindingContext = BaobaoGameController.Instance.DataModel;
+		    BindingContext = BaobaoGameController.Instance.DataModel.BaobaoSpellingModel;
 		}
 	}
 }

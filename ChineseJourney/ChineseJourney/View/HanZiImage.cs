@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using ChineseJourney.Common.Controller;
+using Plugin.TextToSpeech;
 using SkiaSharp.Extended.Svg;
+using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 
 namespace ChineseJourney.Common.View
@@ -17,7 +21,40 @@ namespace ChineseJourney.Common.View
         bool _isHighlighRadialEnabled = true;
         bool _isAnimationEnabled;
 
-        private static void ZiChanged(BindableObject bindable, object oldValue, object newValue)
+        public HanZiImage()
+        {
+            EnableTouchEvents = true;
+            Touch += SkiaSvgImage_Touch;
+            this.OnAnimationChanged += HanZiImageOnAnimationChanged;
+        }
+
+        private void HanZiImageOnAnimationChanged(object sender, AnimationStateArgs e)
+        {
+            Debug.Print(e.Started?"Animation started": "Animation stopped");
+        }
+
+        void SkiaSvgImage_Touch(object sender, SKTouchEventArgs e)
+        {
+            switch (e.ActionType)
+            {
+                case SKTouchAction.Entered:
+                    break;
+                case SKTouchAction.Pressed:
+                    IsAnimationEnabled = !IsAnimationEnabled;
+                    CrossTextToSpeech.Current.Speak(Zi);
+                    break;
+                case SKTouchAction.Moved:
+                    break;
+                case SKTouchAction.Released:
+                    break;
+                case SKTouchAction.Cancelled:
+                    break;
+                case SKTouchAction.Exited:
+                    break;
+            }
+        }
+
+        static void ZiChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var c = bindable as HanZiImage;
             if (c != null)
@@ -78,14 +115,24 @@ namespace ChineseJourney.Common.View
                 if (_isAnimationEnabled != value)
                 {
                     _isAnimationEnabled = value;
+                    OnAnimationChanged?.Invoke(this, new AnimationStateArgs(_isAnimationEnabled));
                     RefreshDisplay();
                 }
             }
         }
+
+        public event EventHandler<AnimationStateArgs> OnAnimationChanged;
+
         public void RefreshHZImage()
         {
-            if (Image != null && (!IsAnimationEnabled || (_strokeCount > 0 && _currentStroke >= _strokeCount)))
+            if (Image != null && !IsAnimationEnabled)
             {
+                return;
+            }
+
+            if (Image != null && (IsAnimationEnabled && (_strokeCount > 0 && _currentStroke >= _strokeCount)))
+            {
+                _isAnimationEnabled = false;
                 return;
             }
 
@@ -113,5 +160,15 @@ namespace ChineseJourney.Common.View
             RefreshHZImage();
             InvalidateSurface();
         }
+    }
+
+    public class AnimationStateArgs : EventArgs
+    {
+        public AnimationStateArgs(bool started)
+        {
+            Started = started;
+        }
+
+        public bool Started { get; set; }
     }
 }

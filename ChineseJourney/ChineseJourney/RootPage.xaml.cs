@@ -11,9 +11,7 @@ namespace ChineseJourney.Common
         public RootPage()
         {
             InitializeComponent();
-            MasterBehavior = MasterBehavior.Popover;
             App.NavigationPage = NavigationPage;
-            NavigationPage.ToolbarItems.Add(new ToolbarItem {Text = "Test"});
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
         }
 
@@ -25,6 +23,7 @@ namespace ChineseJourney.Common
                 return;
             }
 
+            App.NavigationPage.ToolbarItems.Clear();
             if (item.TargetType == null)
             {
                 App.NavigationPage.Navigation.PopToRootAsync();

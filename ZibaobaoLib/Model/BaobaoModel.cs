@@ -14,22 +14,13 @@ namespace ZibaobaoLib.Model
         public const string ResourceBase = "data";
         public const string HttpResourceBase = "http://www.relaxingtech.com/" + ResourceBase + "/";
         public const string LocalPathPrefix = "file://";
-        Dictionary<BaobaoBook, ExamPaper> _books = new Dictionary<BaobaoBook, ExamPaper>();
+        readonly Dictionary<BaobaoBook, ExamPaper> _books = new Dictionary<BaobaoBook, ExamPaper>();
         public ObservableCollection<BaobaoBook> BookList { get; } = new ObservableCollection<BaobaoBook>();
-        public ObservableCollection<SpellingList> SpellingList { get; } = new ObservableCollection<SpellingList>();
-
-        public ObservableCollection<string> SpellingWordList { get; } = new ObservableCollection<string>();
-
-        public ObservableCollection<string> SpellingZiList { get; } = new ObservableCollection<string>();
 
         BaobaoBook _activeBook;
-        SpellingList _activeSpellingList = new SpellingList();
-
 
         public ObservableCollection<QuestionItem> QuestionList { get; } = new ObservableCollection<QuestionItem>();
-
         public ObservableCollection<AnswerItem> AnswerList { get; } = new ObservableCollection<AnswerItem>();
-
         BaobaoBookList _serverBookList;
         readonly BaobaoBookList _localBookList;
 
@@ -40,13 +31,19 @@ namespace ZibaobaoLib.Model
             X1LogHelper.LogLevel = (int)X1EventLogEntryType.Verbose;
             _localBookList = FileSettingsHelper<BaobaoBookList>.LoadSetting() ?? new BaobaoBookList();
             IndexFileName = indexFileName;
-            SpellingList = new ObservableCollection<SpellingList>(SpellingListHelper.GenerateDemo());
             UpdateBookList(false);
-
             AWSHelper.Instance.OnFileAvailable += Download_OnFileAvailable;
             AWSHelper.Instance.DownloadFile(Path.Combine(ResourceBase, IndexFileName),
                 Path.Combine(ZibaobaoLibContext.Instance.PersistentStorage.DownloadPath, IndexFileName)).Forget();
+            BaobaoSpellingModel = new BaobaoSpellingModel();
         }
+
+        public void LoadUserMaterials(string email)
+        {
+            BaobaoSpellingModel.LoadUserMaterial(email);
+        }
+
+        public BaobaoSpellingModel BaobaoSpellingModel { get; set; }
 
         bool IsBookExist(string name)
         {
@@ -147,7 +144,6 @@ namespace ZibaobaoLib.Model
             }
         });
 
-
         public void Download_OnFileAvailable(object sender, StringEventArgs e)
         {
             var filePath = e.Value;
@@ -208,26 +204,6 @@ namespace ZibaobaoLib.Model
             }
         }
 
-
-        public SpellingList ActiveSpellingList
-        {
-            get => _activeSpellingList;
-            set
-            {
-                if (_activeSpellingList != value)
-                {
-                    _activeSpellingList = value;
-                    SpellingWordList.Clear();
-                    foreach (var word in _activeSpellingList.Words)
-                    {
-                        SpellingWordList.Add(word);
-                    }
-                    OnPropertyChanged();
-                    CurrentSpellingWord = SpellingWordList.Count > 0 ? SpellingWordList[0] : string.Empty;
-                }
-            }
-        }
-
         public QuestionItem CurrentQuestion
         {
             get
@@ -245,38 +221,6 @@ namespace ZibaobaoLib.Model
             }
         }
 
-        public string CurrentSpellingWord
-        {
-            get => SpellingWordList.Count >= 0 & CurrentSpellingWordIndex < SpellingWordList.Count
-                ? SpellingWordList[CurrentSpellingWordIndex]
-                : string.Empty;
-            set
-            {
-                if (value != null)
-                {
-                    SpellingZiList.Clear();
-                    foreach (var zi in value.ToCharArray())
-                    {
-                        SpellingZiList.Add(zi.ToString());
-                    }
-                    CurrentSpellingWordIndex = SpellingWordList.IndexOf(value);
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int CurrentSpellingWordIndex
-        {
-            get => _currentSpellingWordIndex;
-            set
-            {
-                if (_currentSpellingWordIndex != value)
-                {
-                    _currentSpellingWordIndex = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         public void LoadQuestions()
         {
@@ -344,7 +288,6 @@ namespace ZibaobaoLib.Model
         }
 
         object _updateBookLock = new object();
-        private int _currentSpellingWordIndex;
 
         void UpdateBookList(bool setActive=true)
         {
