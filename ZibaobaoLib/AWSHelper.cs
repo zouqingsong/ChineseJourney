@@ -45,9 +45,6 @@ namespace ZibaobaoLib
                 null,
                 RegionEndpoint.APSoutheast1 // Region
             );
-
-            //key id: AKIAJ73CRJAXPE2TXXOQ
-            //access: eVatiCgh8cCGQ8uyAGCpWF8lR5SYGC542kXiCBCo
         }
 
         public IAmazonS3 AWSS3Client => new AmazonS3Client(Credentials, RegionEndpoint.APSoutheast1);
