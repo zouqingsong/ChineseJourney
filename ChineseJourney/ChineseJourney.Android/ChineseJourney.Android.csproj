@@ -328,7 +328,7 @@
       <Name>ZibaobaoLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChineseJourney\ChineseJourney.csproj">
-      <Project>{B641004E-97B7-4122-A06F-8D5F43629C33}</Project>
+      <Project>{D7D5BF24-897D-46C4-A4C9-51129CDD1B45}</Project>
       <Name>ChineseJourney</Name>
     </ProjectReference>
   </ItemGroup>

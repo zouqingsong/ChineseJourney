@@ -148,17 +148,16 @@ namespace ChineseJourney.Common.View
                     {
                         await Task.Delay(500);
                         RefreshHZImage();
-                        InvalidateSurface();
                     });
                 }
             }
         }
+
         void RefreshDisplay()
         {
             _currentStroke = 0;
             Image = null;
             RefreshHZImage();
-            InvalidateSurface();
         }
     }
 

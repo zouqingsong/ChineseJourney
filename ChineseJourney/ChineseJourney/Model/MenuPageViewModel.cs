@@ -19,11 +19,11 @@ namespace ChineseJourney.Common.Model
             _userAccount = new UserAccount();
             MenuItems = new ObservableCollection<MasterMenuItem>(new[]
             {
-                //new MasterMenuItem {Title = "Zi", TargetType = typeof(HanziPage)},
+                new MasterMenuItem {Title = "Zi", TargetType = typeof(HanziPage)},
                 new MasterMenuItem {Title = "Spelling", TargetType = typeof(SpellingSliderShowPage)},
-                //new MasterMenuItem {Title = "Create Spelling", TargetType = typeof(CreateSpellingPage)},
-                //new MasterMenuItem {Title = "Exam", TargetType = typeof(QuestionPage)},
-                //new MasterMenuItem {Title = "Create Exam Paper", TargetType = typeof(CreateQuestionPage)},
+                new MasterMenuItem {Title = "Create Spelling", TargetType = typeof(CreateSpellingPage)},
+                new MasterMenuItem {Title = "Exam", TargetType = typeof(QuestionPage)},
+                new MasterMenuItem {Title = "Create Exam Paper", TargetType = typeof(CreateQuestionPage)},
             });
             if (IsAccountValid)
             {

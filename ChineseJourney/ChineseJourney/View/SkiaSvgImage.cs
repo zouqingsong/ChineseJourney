@@ -1,4 +1,5 @@
 ﻿using System;
+using ChineseJourney.Common.Controller;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
@@ -29,11 +30,22 @@ namespace ChineseJourney.Common.View
             if (c != null)
             {
                 c.Image = newValue as SKSvg;
-                c.InvalidateSurface();
             }
         }
 
-        public SKSvg Image { get; set; }
+        SKSvg _image;
+        public SKSvg Image 
+        { 
+            get
+            {
+                return _image;
+            } 
+            set
+            {
+                _image = value;
+                BaobaoGameController.Invoke(InvalidateSurface);
+            } 
+        }
 
         public SKRect Bound { get; set; }
 
