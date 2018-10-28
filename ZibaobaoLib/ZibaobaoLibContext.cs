@@ -1,4 +1,6 @@
-﻿namespace ZibaobaoLib
+﻿using Plugin.TextToSpeech.Abstractions;
+
+namespace ZibaobaoLib
 {
     public class ZibaobaoLibContext
     {
@@ -7,6 +9,7 @@
 
         public string AppName { get; set; }
         public string Platform { get; set; }
+        public ITextToSpeech TextToSpeech { get; set; }
         public IPersistentStorage PersistentStorage { get; set; }
         public bool IsFirstTimeStart { get; set; }
     }

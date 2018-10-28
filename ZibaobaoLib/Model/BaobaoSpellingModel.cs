@@ -103,7 +103,7 @@ namespace ZibaobaoLib.Model
                     _currentSpellingWordIndex = value;
                     if (_currentSpellingWordIndex >= 0 && _currentSpellingWordIndex < SpellingWordList.Count)
                     {
-                        CrossTextToSpeech.Current.Speak(SpellingWordList[_currentSpellingWordIndex]);
+                        ZibaobaoLibContext.Instance.TextToSpeech?.Speak(SpellingWordList[_currentSpellingWordIndex]);
                     }
                     OnPropertyChanged();
                 }

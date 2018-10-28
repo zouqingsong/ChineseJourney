@@ -41,7 +41,7 @@ namespace ZibaobaoLib
                     if (!_connections.TryGetValue(connectionKey, out connection))
                     {
                         connection = new SecureSqLiteConnectionWithLock(
-                            new SQLiteConnectionString(connectionKey, true), SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex | SQLiteOpenFlags.Create);
+                            new SQLiteConnectionString(connectionKey, true, connectionKey), SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex | SQLiteOpenFlags.Create);
                         _connections[connectionKey] = connection;
                     }
                     return connection;

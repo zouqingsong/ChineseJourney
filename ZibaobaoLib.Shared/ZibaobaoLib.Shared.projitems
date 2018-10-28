@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DiskStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrossTextToSpeech.shared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)X1LocalLogger.cs" />
   </ItemGroup>
 </Project>

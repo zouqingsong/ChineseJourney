@@ -2,10 +2,9 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using ChineseJourney.Common.Controller;
-using Plugin.TextToSpeech;
-using SkiaSharp.Extended.Svg;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
+using ZibaobaoLib;
 
 namespace ChineseJourney.Common.View
 {
@@ -41,7 +40,7 @@ namespace ChineseJourney.Common.View
                     break;
                 case SKTouchAction.Pressed:
                     IsAnimationEnabled = !IsAnimationEnabled;
-                    CrossTextToSpeech.Current.Speak(Zi);
+                    ZibaobaoLibContext.Instance.TextToSpeech?.Speak(Zi);
                     break;
                 case SKTouchAction.Moved:
                     break;
