@@ -40,7 +40,7 @@ namespace ChineseJourney.Common.View
                     break;
                 case SKTouchAction.Pressed:
                     IsAnimationEnabled = !IsAnimationEnabled;
-                    ZibaobaoLibContext.Instance.TextToSpeech?.Speak(Zi);
+                    ZibaobaoLibContext.Instance.Speak(Zi);
                     break;
                 case SKTouchAction.Moved:
                     break;

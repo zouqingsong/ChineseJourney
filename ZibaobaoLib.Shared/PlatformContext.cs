@@ -1,4 +1,5 @@
-﻿using Plugin.TextToSpeech;
+﻿using System.Linq;
+using Plugin.TextToSpeech;
 using SamplyGame.Helpers;
 using ZibaobaoLib;
 using ZibaobaoLib.Helpers;

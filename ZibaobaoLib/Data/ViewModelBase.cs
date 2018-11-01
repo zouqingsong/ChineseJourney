@@ -16,7 +16,7 @@ namespace ZibaobaoLib.Data
         {
             if (!string.IsNullOrEmpty(text))
             {
-                ZibaobaoLibContext.Instance.TextToSpeech?.Speak(text);
+                ZibaobaoLibContext.Instance.Speak(text);
             }
         });
 
